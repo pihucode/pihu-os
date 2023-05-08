@@ -1,25 +1,29 @@
 <script>
 	import MoveableWindow from '$lib/components/MoveableWindow.svelte';
+	import { allWindowsStore, openedWindowsStore } from '$lib/stores/windows';
 
-	let windows = []; // list of opened MoveableWindows
+	// let windows = []; // list of opened MoveableWindows
 
-	const handleFolderOpen = (text) => {
-		if (!windows.includes(text)) {
-			windows = [...windows, text];
+	const handleWindowOpen = (win) => {
+		if (!$openedWindowsStore.includes(win)) {
+			$openedWindowsStore = [...$openedWindowsStore, win];
 		}
 	};
 </script>
 
 <div>
 	<h1>desktop</h1>
-	<button on:dblclick={() => handleFolderOpen('folder 1')}>folder 1</button>
-	<button on:dblclick={() => handleFolderOpen('folder 2')}>folder 2</button>
 
-	<MoveableWindow content="main" />
+	{$openedWindowsStore.length}
 
-	<!-- for each -->
-	{#each windows as windowName}
-		<MoveableWindow content={windowName} />
+	<!-- icons -->
+	{#each $allWindowsStore as win}
+		<button on:dblclick={() => handleWindowOpen(win)}>{win.icon.name}</button>
+	{/each}
+
+	<!-- opened windows -->
+	{#each $openedWindowsStore as win}
+		<MoveableWindow content={win.content} />
 	{/each}
 
 	<p>
