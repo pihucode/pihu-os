@@ -23,4 +23,5 @@ export const closeWindow = (id) => {
     openedWindowsStore.update(openedWindows => {
         return openedWindows.filter(w => w.id !== id);
     });
+    console.log('closed window with id: ' + id);
 };

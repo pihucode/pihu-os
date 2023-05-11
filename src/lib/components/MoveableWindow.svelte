@@ -1,4 +1,7 @@
 <script>
+	import { closeWindow } from '$lib/stores/windows';
+
+	export let window;
 	export let content = 'window title';
 
 	let isDragging = false;
@@ -34,6 +37,7 @@
 		on:mouseup={handleMouseUp}
 	>
 		window bar
+		<button on:click={() => closeWindow(window.id)}>X</button>
 	</div>
 	<p>{content}</p>
 	<p>{isDragging} - {dragStartX}, {dragStartY}</p>

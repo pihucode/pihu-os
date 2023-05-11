@@ -23,7 +23,7 @@
 
 	<!-- opened windows -->
 	{#each $openedWindowsStore as win}
-		<MoveableWindow content={win.content} />
+		<MoveableWindow window={win} content={win.content} />
 	{/each}
 
 	<p>
