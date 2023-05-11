@@ -1,8 +1,7 @@
 <script>
 	import MoveableWindow from '$lib/components/MoveableWindow.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import { allWindowsStore, openedWindowsStore } from '$lib/stores/windows';
-
-	// let windows = []; // list of opened MoveableWindows
 
 	const handleWindowOpen = (win) => {
 		if (!$openedWindowsStore.includes(win)) {
@@ -18,7 +17,7 @@
 
 	<!-- icons -->
 	{#each $allWindowsStore as win}
-		<button on:dblclick={() => handleWindowOpen(win)}>{win.icon.name}</button>
+		<Icon {win} {handleWindowOpen} />
 	{/each}
 
 	<!-- opened windows -->
