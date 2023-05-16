@@ -5,21 +5,17 @@
 	export let content = 'window title';
 
 	let isDragging = false;
-	let dragStartX, dragStartY;
-	let container, bar;
+	let left = 400,
+		top = 400;
 
-	const handleMouseDown = (e) => {
+	const handleMouseDown = () => {
 		isDragging = true;
-		dragStartX = e.clientX - container.offsetLeft;
-		dragStartY = e.clientY - container.offsetTop;
 	};
 
 	const handleMouseMove = (e) => {
 		if (isDragging) {
-			const newLeft = e.clientX - dragStartX;
-			const newTop = e.clientY - dragStartY;
-			container.style.left = newLeft + 'px';
-			container.style.top = newTop + 'px';
+			left += e.movementX;
+			top += e.movementY;
 		}
 	};
 
@@ -28,26 +24,20 @@
 	};
 </script>
 
-<div bind:this={container} class="moveable sample">
-	<div
-		bind:this={bar}
-		class="bar"
-		on:mousedown={handleMouseDown}
-		on:mousemove={handleMouseMove}
-		on:mouseup={handleMouseUp}
-	>
+<div class="moveable sample" style="left: {left}px; top: {top}px;">
+	<div class="bar" on:mousedown={handleMouseDown}>
 		window bar
 		<button on:click={() => closeWindow(window.id)}>X</button>
 	</div>
 	<p>{content}</p>
-	<p>{isDragging} - {dragStartX}, {dragStartY}</p>
+	<p>{isDragging} - {left}, {top}</p>
 </div>
+
+<svelte:window on:mouseup={handleMouseUp} on:mousemove={handleMouseMove} />
 
 <style>
 	.moveable {
 		position: absolute;
-		top: 400px;
-		left: 400px;
 		z-index: 100;
 	}
 
