@@ -5,8 +5,6 @@
 	export let content = 'window title';
 
 	let isDragging = false;
-	let left = 400,
-		top = 400;
 
 	const handleMouseDown = () => {
 		isDragging = true;
@@ -14,8 +12,8 @@
 
 	const handleMouseMove = (e) => {
 		if (isDragging) {
-			left += e.movementX;
-			top += e.movementY;
+			window.position.x += e.movementX;
+			window.position.y += e.movementY;
 		}
 	};
 
@@ -24,13 +22,13 @@
 	};
 </script>
 
-<div class="moveable sample" style="left: {left}px; top: {top}px;">
+<div class="moveable sample" style="left: {window.position.x}px; top: {window.position.y}px;">
 	<div class="bar" on:mousedown={handleMouseDown}>
 		window bar
 		<button on:click={() => closeWindow(window.id)}>X</button>
 	</div>
 	<p>{content}</p>
-	<p>{isDragging} - {left}, {top}</p>
+	<p>{isDragging} - {window.position.x}, {window.position.y}</p>
 </div>
 
 <svelte:window on:mouseup={handleMouseUp} on:mousemove={handleMouseMove} />
