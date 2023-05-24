@@ -8,6 +8,14 @@ const window1 = {
     position: {
         x: 400, //left
         y: 400 //top
+    },
+    bounds: {
+        left: 400,
+        right: 400,
+        top: 370,
+        bottom: 200,
+        width: 300,
+        height: 200
     }
 }
 const window2 = {
@@ -18,6 +26,14 @@ const window2 = {
     position: {
         x: 400, //left
         y: 400 //top
+    },
+    bounds: {
+        left: 400,
+        right: 400,
+        top: 370,
+        bottom: 200,
+        width: 300,
+        height: 200
     }
 }
 
