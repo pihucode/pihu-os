@@ -1,8 +1,11 @@
 <script>
 	import { closeWindow } from '$lib/stores/windows';
+	import { zStackWindows, moveWindowUpZStack } from '$lib/stores/windowZStack';
 
 	export let box;
 	export let content = 'window title';
+
+	const Z_INDEX_PADDING = 10;
 
 	// ================== code for dragging window box ==================
 	let isDragging = false;
@@ -129,21 +132,32 @@
 		dragOMouseUp(e);
 		resizeOnMouseUp(e);
 	};
+
+	// ================== CSS variables ==================
+	$: cssVarStyles = `--zIndex:${
+		$zStackWindows.findIndex((winId) => winId === box.id) + Z_INDEX_PADDING
+	};`;
 </script>
 
 <div
 	class="moveable container"
-	style="left: {box.position.x}px; top: {box.position.y}px; width: {box.bounds
-		.width}px; height: {box.bounds.height}px; "
+	style="
+        left: {box.position.x}px; 
+        top: {box.position.y}px; 
+        width: {box.bounds.width}px; 
+        height: {box.bounds.height}px;
+        {cssVarStyles}"
 	use:move
 	use:resize
+	on:mousedown={() => moveWindowUpZStack(box.id)}
 >
 	<div class="bar" on:mousedown={dragOMouseDown}>
 		window bar
 		<button on:click={() => closeWindow(box.id)}>X</button>
 	</div>
 	<p>{content}</p>
-	<p>{isDragging} - {box.position.x}, {box.position.y}</p>
+	<p>isDragging: {isDragging} ({box.position.x}, {box.position.y})</p>
+	<p>z index: {$zStackWindows.findIndex((winId) => winId === box.id) + Z_INDEX_PADDING}</p>
 </div>
 
 <svelte:window on:mouseup={handleMouseUp} on:mousemove={handleMouseMove} />
@@ -151,7 +165,7 @@
 <style>
 	.moveable {
 		position: absolute;
-		z-index: 100;
+		z-index: var(--zIndex);
 	}
 
 	.container {
@@ -161,6 +175,9 @@
 		font-family: 'Courier New', Courier, monospace;
 	}
 	.bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background-color: #2e2d40;
 		color: white;
 		padding: 8px;
