@@ -30,13 +30,15 @@
 
 <style>
 	.desktop {
-		/* set image to be static/images/purplesky.jpg */
 		background-image: url('/images/purple-sky.jpg');
 		background-color: #534f53;
 		background-size: cover;
 		background-position: center;
-		height: 100vh;
-		color: white;
+
 		padding: 32px;
+		height: calc(100vh - 64px);
+		width: calc(100vw - 64px);
+
+		color: white;
 	}
 </style>
